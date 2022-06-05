@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tx.repository.TestRepository">
+    <resultMap id="itemMap" type="com.example.tx.model.Item">
+    </resultMap>
+
+    <insert id="addItem" parameterType="com.example.tx.model.Item" useGeneratedKeys="true" keyProperty="itemId">
+        insert into item (name, price)
+        values (#{name}, #{price})
+    </insert>
+
+    <insert id="addItemDetail" parameterType="map">
+        insert into item_detail (item_id,stock,size)
+        values
+        <foreach collection="itemDetails" separator="," item="itemDetail">
+            (#{itemId}, #{itemDetail.stock}, #{itemDetail.size})
+        </foreach>
+    </insert>
+
+    <select id="countAllItems" resultType="int">
+        select count(*) from item
+    </select>
+
+    <select id="countAllItemDetails" resultType="int">
+        select count(*) from item_detail
+    </select>
+
+</mapper>
